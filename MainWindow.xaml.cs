@@ -1,4 +1,6 @@
-﻿namespace QuizDasha
+﻿using QuizDasha.Services;
+
+namespace QuizDasha
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -8,6 +10,8 @@
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowViewModel(new QuizDataReader());
         }
     }
 }
