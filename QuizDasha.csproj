@@ -70,7 +70,6 @@
     <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\Quiz.cs" />
     <Compile Include="Entities\Result.cs" />
-    <Compile Include="Services\IQuizReader.cs" />
     <Compile Include="Services\QuizReader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
