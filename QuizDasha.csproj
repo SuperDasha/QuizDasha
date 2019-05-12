@@ -67,9 +67,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entities\QuizData.cs" />
-    <Compile Include="Services\IQuizDataReader.cs" />
-    <Compile Include="Services\QuizDataReader.cs" />
+    <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\Quiz.cs" />
+    <Compile Include="Entities\Result.cs" />
+    <Compile Include="Services\IQuizReader.cs" />
+    <Compile Include="Services\QuizReader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

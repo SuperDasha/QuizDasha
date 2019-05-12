@@ -5,7 +5,7 @@ namespace QuizDasha.Entities
     /// <summary>
     /// Базовый класс с данными опроса.
     /// </summary>
-    public class QuizData : BindableBase
+    public class Quiz : BindableBase
     {
         private string _name;
 

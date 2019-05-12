@@ -8,9 +8,9 @@ namespace QuizDasha
 {
     public class MainWindowViewModel : BindableBase
     {
-        private readonly IQuizDataReader _quizDataReader;
+        private readonly IQuizReader _quizDataReader;
 
-        public MainWindowViewModel(IQuizDataReader quizDataReader)
+        public MainWindowViewModel(IQuizReader quizDataReader)
         {
             _quizDataReader = quizDataReader;
             ExitCommand = new DelegateCommand(DoExit);

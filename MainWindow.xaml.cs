@@ -11,7 +11,7 @@ namespace QuizDasha
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel(new QuizDataReader());
+            DataContext = new MainWindowViewModel(new QuizReader());
         }
     }
 }
