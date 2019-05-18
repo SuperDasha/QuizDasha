@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entities\Option.cs" />
     <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\Quiz.cs" />
     <Compile Include="Entities\Result.cs" />

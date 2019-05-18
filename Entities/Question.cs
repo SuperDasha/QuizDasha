@@ -7,6 +7,8 @@ namespace QuizDasha.Entities
     /// </summary>
     public class Question : BindableBase
     {
+        // 1. Список (массив) вариантов ответов на вопрос.
+
         private string _text;
 
         /// <summary>
