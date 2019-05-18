@@ -5,6 +5,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:local="clr-namespace:QuizDasha"
+                      xmlns:entities="clr-namespace:QuizDasha.Entities"
                       mc:Ignorable="d"
                       Height="450"
                       Width="800"
@@ -21,6 +22,33 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <ContentControl Grid.Row="0"
+                        Grid.Column="1"
+                        Content="{Binding CurrentQuestion}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type entities:Question}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding Text}" />
+
+                        <ItemsControl ItemsSource="{Binding Options}">
+                            <ItemsControl.Resources>
+                                <DataTemplate DataType="{x:Type entities:Option}">
+                                    <StackPanel Orientation="Vertical">
+                                        <CheckBox IsThreeState="False" IsChecked="{Binding IsChecked}" />
+                                        <TextBlock Text="{Binding Text}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.Resources>
+                        </ItemsControl>
+                    </Grid>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+        
         <Button Grid.Row="1"
                 Grid.Column="2"
                 Content="В_ыход"

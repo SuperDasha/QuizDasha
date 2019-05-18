@@ -7,42 +7,44 @@ namespace QuizDasha.Entities
     /// </summary>
     public class Option : BindableBase
     {
-        // 1. Текст варианта ответа (Text)
-        // 2. Баллы за выбор ответа int (PointsWhenSelected)
-        // 2. Баллы за невыбор ответа int (PointsWhenNotSelected)
-
-
-        private string _options;
-
-        public string Options
-        {
-            get { return _options; }
-            set { SetProperty(ref _options, value); }
-        }
-
-
-        // 1. Текст варианта ответа (Text)
         private string _text;
 
+        /// <summary>
+        /// Текст варианта ответа.
+        /// </summary>
         public string Text
         {
             get { return _text; }
             set { SetProperty(ref _text, value); }
         }
 
+        private bool _isSelected;
 
-        // 2. Баллы за выбор ответа int (PointsWhenSelected)
+        /// <summary>
+        /// Выбран ли ответ.
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { SetProperty(ref _isSelected, value); }
+        }
+
         private int _pointwhenselected;
 
+        /// <summary>
+        /// Баллы за выбор ответа.
+        /// </summary>
         public int PointWhenSelected
         {
             get { return _pointwhenselected; }
             set { SetProperty(ref _pointwhenselected, value); }
         }
 
-        // 3. Баллы за невыбор ответа int (PointsWhenNotSelected)
         private int _pointwhennotselected;
 
+        /// <summary>
+        /// Баллы за невыбор ответа.
+        /// </summary>
         public int PointWhenNotSelected
         {
             get { return _pointwhennotselected; }
