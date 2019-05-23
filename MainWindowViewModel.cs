@@ -1,5 +1,5 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using QuizDasha.Entities;
 using QuizDasha.Services;
 using System;
@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace QuizDasha
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : ObservableObject
     {
         private readonly QuizReader _quizReader;
 
@@ -15,13 +15,15 @@ namespace QuizDasha
         {
             _quizReader = quizReader;
 
-            ExitCommand = new DelegateCommand(DoExit);
-            ShowResultCommand = new DelegateCommand(DoShowResult);
+            ExitCommand = new RelayCommand(DoExit);
+            ShowResultCommand = new RelayCommand(DoShowResult);
+            NextCommand = new RelayCommand(DoNext, CanDoNext);
+            PrevCommand = new RelayCommand(DoPrev, CanDoPrev);
 
             // Читаем данные опросника.
             Quiz = _quizReader.ReadQuiz("quiz.xml");
-            _сurrentQuestionId = 0;
-            CurrentQuestion = Quiz.Questions[_сurrentQuestionId];
+            _questionIndex = 0;
+            ObjectToDisplay = Quiz.Questions[_questionIndex];
         }
 
         private Quiz _quiz;
@@ -32,19 +34,28 @@ namespace QuizDasha
         public Quiz Quiz
         {
             get { return _quiz; }
-            set { SetProperty(ref _quiz, value); }
+            set { Set(ref _quiz, value); }
         }
 
-        private int _сurrentQuestionId;
-        private Question _сurrentQuestion;
+        private bool _questionMode;
+
+        private int _questionIndex;
+
+        private object _objectToDisplay;
 
         /// <summary>
-        /// Идентификатор текущего вопроса в списке вопросов опросника.
+        /// Объект, который будет выводиться на форме.
         /// </summary>
-        public Question CurrentQuestion
+        public object ObjectToDisplay
         {
-            get { return _сurrentQuestion; }
-            set { SetProperty(ref _сurrentQuestion, value); }
+            get { return _objectToDisplay; }
+            set { Set(ref _objectToDisplay, value); }
+        }
+
+        private void DoPrev()
+        {
+            _questionIndex -= 1;
+            ObjectToDisplay = Quiz.Questions[_questionIndex];
         }
 
         private void DoExit()
@@ -54,9 +65,26 @@ namespace QuizDasha
 
         private void DoShowResult()
         {
-
         }
 
+        private void DoNext()
+        {
+            _questionIndex += 1;
+            ObjectToDisplay = Quiz.Questions[_questionIndex];
+        }
+
+        private bool CanDoNext()
+        {
+            return _questionIndex < Quiz.Questions.Length - 1;
+        }
+
+        private bool CanDoPrev()
+        {
+            return _questionIndex > 0;
+        }
+
+        public ICommand PrevCommand { get; }
+        public ICommand NextCommand { get; }
         public ICommand ExitCommand { get; }
         public ICommand ShowResultCommand { get; }
     }

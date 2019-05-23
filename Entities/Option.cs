@@ -1,11 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using GalaSoft.MvvmLight;
 
 namespace QuizDasha.Entities
 {
     /// <summary>
     /// Вариант ответа на вопрос опросника.
     /// </summary>
-    public class Option : BindableBase
+    public class Option : ObservableObject
     {
         private string _text;
 
@@ -15,7 +15,7 @@ namespace QuizDasha.Entities
         public string Text
         {
             get { return _text; }
-            set { SetProperty(ref _text, value); }
+            set { Set(ref _text, value); }
         }
 
         private bool _isSelected;
@@ -26,29 +26,29 @@ namespace QuizDasha.Entities
         public bool IsSelected
         {
             get { return _isSelected; }
-            set { SetProperty(ref _isSelected, value); }
+            set { Set(ref _isSelected, value); }
         }
 
-        private int _pointwhenselected;
+        private int _pointWhenSelected;
 
         /// <summary>
         /// Баллы за выбор ответа.
         /// </summary>
         public int PointWhenSelected
         {
-            get { return _pointwhenselected; }
-            set { SetProperty(ref _pointwhenselected, value); }
+            get { return _pointWhenSelected; }
+            set { Set(ref _pointWhenSelected, value); }
         }
 
-        private int _pointwhennotselected;
+        private int _pointWhenNotSelected;
 
         /// <summary>
         /// Баллы за невыбор ответа.
         /// </summary>
         public int PointWhenNotSelected
         {
-            get { return _pointwhennotselected; }
-            set { SetProperty(ref _pointwhennotselected, value); }
+            get { return _pointWhenNotSelected; }
+            set { Set(ref _pointWhenNotSelected, value); }
         }
 
     }

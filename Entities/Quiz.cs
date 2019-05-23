@@ -1,11 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using GalaSoft.MvvmLight;
 
 namespace QuizDasha.Entities
 {
     /// <summary>
     /// Базовый класс с данными опросника.
     /// </summary>
-    public class Quiz : BindableBase
+    public class Quiz : ObservableObject
     {
         private string _name;
 
@@ -15,7 +15,7 @@ namespace QuizDasha.Entities
         public string Name
         {
             get { return _name; }
-            set { SetProperty(ref _name, value); }
+            set { Set(ref _name, value); }
         }
 
         private Question[] _questions;
@@ -26,7 +26,7 @@ namespace QuizDasha.Entities
         public Question[] Questions
         {
             get { return _questions; }
-            set { SetProperty(ref _questions, value); }
+            set { Set(ref _questions, value); }
         }
     }
 }
