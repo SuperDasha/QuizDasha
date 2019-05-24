@@ -19,9 +19,8 @@ namespace QuizDasha
 
             // Читаем данные опросника.
             Quiz = quizReader.ReadQuiz("quiz.xml");
-            _questionMode = true;
-            _questionIndex = 0;
-            ObjectToDisplay = Quiz.Questions[_questionIndex];
+
+            ObjectToDisplay = Quiz.Intro;
         }
 
         private Quiz _quiz;
@@ -36,6 +35,13 @@ namespace QuizDasha
         }
 
         private bool _questionMode;
+
+        public bool QuestionMode
+        {
+            get { return _questionMode; }
+            set { Set(ref _questionMode, value); }
+        }
+
         private int _questionIndex;
 
         private object _objectToDisplay;
@@ -47,6 +53,10 @@ namespace QuizDasha
         {
             get { return _objectToDisplay; }
             set { Set(ref _objectToDisplay, value); }
+        }
+
+        private void DoGoToTest()
+        {
         }
 
         private void DoPrev()
@@ -62,30 +72,40 @@ namespace QuizDasha
 
         private void DoShowResult()
         {
-            var userResult = new Result();
+            if (QuestionMode)
+            {
+                var userResult = new Result();
 
-            foreach (var question in Quiz.Questions)
-                foreach (var option in question.Options)
-                {
-                    if (option.IsSelected)
+                foreach (var question in Quiz.Questions)
+                    foreach (var option in question.Options)
                     {
-                        userResult.Score += option.PointWhenSelected;
+                        if (option.IsSelected)
+                        {
+                            userResult.Score += option.PointWhenSelected;
+                        }
+                        else
+                        {
+                            userResult.Score += option.PointWhenNotSelected;
+                        }
                     }
-                    else
+
+                foreach (var quizResult in Quiz.Results.OrderByDescending(r => r.Score))
+                    if (userResult.Score > quizResult.Score)
                     {
-                        userResult.Score += option.PointWhenNotSelected;
+                        userResult.Text = quizResult.Text;
+                        break;
                     }
-                }
 
-            foreach (var quizResult in Quiz.Results.OrderByDescending(r => r.Score))
-                if (userResult.Score > quizResult.Score)
-                {
-                    userResult.Text = quizResult.Text;
-                    break;
-                }
+                QuestionMode = false;
+                ObjectToDisplay = userResult;
+            }
+            else
+            {
+                _questionIndex = 0;
+                ObjectToDisplay = Quiz.Questions[_questionIndex];
 
-            _questionMode = false;
-            ObjectToDisplay = userResult;
+                QuestionMode = true;
+            }
         }
 
         private void DoNext()
@@ -96,12 +116,12 @@ namespace QuizDasha
 
         private bool CanDoNext()
         {
-            return _questionMode && _questionIndex < Quiz.Questions.Length - 1;
+            return QuestionMode && _questionIndex < Quiz.Questions.Length - 1;
         }
 
         private bool CanDoPrev()
         {
-            return _questionMode && _questionIndex > 0;
+            return QuestionMode && _questionIndex > 0;
         }
 
         public ICommand PrevCommand { get; }

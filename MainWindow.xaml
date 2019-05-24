@@ -80,6 +80,31 @@
 
                     </Grid>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type entities:Intro}">
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Margin="8"
+                                   FontSize="{StaticResource HeaderFontSize}"
+                                   HorizontalAlignment="Center">Готов к началу теста?</TextBlock>
+
+                        <TextBlock Grid.Row="1"
+                                   Margin="8"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Text}"
+                                   TextWrapping="Wrap" />
+
+                        <TextBlock Grid.Row="1">
+                             Если да, жми "Начать"!
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
 
@@ -98,9 +123,21 @@
         <Button Grid.Row="1"
                 Grid.Column="2"
                 HorizontalAlignment="Center"
-                Content="Показать результаты"
                 Margin="2"
-                Command="{Binding ShowResultCommand}"></Button>
+                Command="{Binding ShowResultCommand}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding QuestionMode}" Value="True">
+                            <Setter Property="Content" Value="Показать результаты" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding QuestionMode}" Value="False">
+                            <Setter Property="Content" Value="Начать тест" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
 
         <Button Grid.Row="1"

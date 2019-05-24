@@ -39,5 +39,13 @@ namespace QuizDasha.Entities
             get { return _results; }
             set { Set(ref _results, value); }
         }
+
+        private Intro _intro;
+
+        public Intro Intro
+        {
+            get { return _intro; }
+            set { Set(ref _intro, value); }
+        }
     }
 }
