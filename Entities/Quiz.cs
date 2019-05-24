@@ -28,5 +28,16 @@ namespace QuizDasha.Entities
             get { return _questions; }
             set { Set(ref _questions, value); }
         }
+
+        private Result[] _results;
+
+        /// <summary>
+        /// Варианты текстов результата с баллами.
+        /// </summary>
+        public Result[] Results
+        {
+            get { return _results; }
+            set { Set(ref _results, value); }
+        }
     }
 }

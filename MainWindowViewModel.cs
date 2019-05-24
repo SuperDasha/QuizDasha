@@ -3,25 +3,23 @@ using GalaSoft.MvvmLight.CommandWpf;
 using QuizDasha.Entities;
 using QuizDasha.Services;
 using System;
+using System.Linq;
 using System.Windows.Input;
 
 namespace QuizDasha
 {
     public class MainWindowViewModel : ObservableObject
     {
-        private readonly QuizReader _quizReader;
-
         public MainWindowViewModel(QuizReader quizReader)
         {
-            _quizReader = quizReader;
-
             ExitCommand = new RelayCommand(DoExit);
             ShowResultCommand = new RelayCommand(DoShowResult);
             NextCommand = new RelayCommand(DoNext, CanDoNext);
             PrevCommand = new RelayCommand(DoPrev, CanDoPrev);
 
             // Читаем данные опросника.
-            Quiz = _quizReader.ReadQuiz("quiz.xml");
+            Quiz = quizReader.ReadQuiz("quiz.xml");
+            _questionMode = true;
             _questionIndex = 0;
             ObjectToDisplay = Quiz.Questions[_questionIndex];
         }
@@ -38,7 +36,6 @@ namespace QuizDasha
         }
 
         private bool _questionMode;
-
         private int _questionIndex;
 
         private object _objectToDisplay;
@@ -65,6 +62,30 @@ namespace QuizDasha
 
         private void DoShowResult()
         {
+            var userResult = new Result();
+
+            foreach (var question in Quiz.Questions)
+                foreach (var option in question.Options)
+                {
+                    if (option.IsSelected)
+                    {
+                        userResult.Score += option.PointWhenSelected;
+                    }
+                    else
+                    {
+                        userResult.Score += option.PointWhenNotSelected;
+                    }
+                }
+
+            foreach (var quizResult in Quiz.Results.OrderByDescending(r => r.Score))
+                if (userResult.Score > quizResult.Score)
+                {
+                    userResult.Text = quizResult.Text;
+                    break;
+                }
+
+            _questionMode = false;
+            ObjectToDisplay = userResult;
         }
 
         private void DoNext()
@@ -75,12 +96,12 @@ namespace QuizDasha
 
         private bool CanDoNext()
         {
-            return _questionIndex < Quiz.Questions.Length - 1;
+            return _questionMode && _questionIndex < Quiz.Questions.Length - 1;
         }
 
         private bool CanDoPrev()
         {
-            return _questionIndex > 0;
+            return _questionMode && _questionIndex > 0;
         }
 
         public ICommand PrevCommand { get; }
