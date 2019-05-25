@@ -40,7 +40,8 @@
                         <TextBlock Grid.Row="0"
                                    Margin="8"
                                    FontSize="{StaticResource HeaderFontSize}"
-                                   Text="{Binding Text}" />
+                                   Text="{Binding Text}"
+                                   TextWrapping="Wrap"/>
 
                         <ItemsControl Margin="10"
                                       Grid.Row="1"
@@ -50,7 +51,8 @@
                                     <StackPanel Orientation="Horizontal"
                                                 Margin="2">
                                         <CheckBox IsThreeState="False" IsChecked="{Binding IsSelected}" />
-                                        <TextBlock Text="{Binding Text}" />
+                                        <TextBlock Text="{Binding Text}"
+                                                   TextWrapping="Wrap"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.Resources>
@@ -71,11 +73,9 @@
                                    FontSize="{StaticResource HeaderFontSize}"
                                    HorizontalAlignment="Center">Результаты теста</TextBlock>
 
-                        <TextBlock Grid.Row="1">
-                            Поздравляем! Ты набрал <Run Text="{Binding Score}" /> баллов!
-                        </TextBlock>
                         <TextBlock Grid.Row="2"
                                    TextWrapping="Wrap"
+                                   FontSize="{StaticResource HeaderFontSize}"
                                    Text="{Binding Text}" />
 
                     </Grid>
@@ -86,10 +86,11 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0"
+                        <TextBlock Grid.Row="2"
                                    Margin="8"
                                    FontSize="{StaticResource HeaderFontSize}"
                                    HorizontalAlignment="Center">Готов к началу теста?</TextBlock>
@@ -100,8 +101,8 @@
                                    Text="{Binding Text}"
                                    TextWrapping="Wrap" />
 
-                        <TextBlock Grid.Row="1">
-                             Если да, жми "Начать"!
+                        <TextBlock Grid.Row="3"
+                                   HorizontalAlignment="Center">Если да, жми "Начать"!                                   
                         </TextBlock>
                     </Grid>
                 </DataTemplate>
